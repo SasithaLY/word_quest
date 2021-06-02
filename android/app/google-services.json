@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "587230575812",
+    "firebase_url": "https://word-quest-63d43-default-rtdb.firebaseio.com",
+    "project_id": "word-quest-63d43",
+    "storage_bucket": "word-quest-63d43.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:587230575812:android:157f1db9de64cdef0d5d91",
+        "android_client_info": {
+          "package_name": "com.example.word_quest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "587230575812-pp2hc5vmovd4qn3nspsckifs0a4qe2re.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.word_quest",
+            "certificate_hash": "5e2a3887302dfec6564cb29c7afde43b28f7ebe8"
+          }
+        },
+        {
+          "client_id": "587230575812-kja3cn1glvqc5h3f8u9r60oc46b2i5jm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2lCbXSo-DgzIfaiA5TwpPIL4PCo3dgc0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "587230575812-kja3cn1glvqc5h3f8u9r60oc46b2i5jm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
