@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'adminPanel/adminPanel.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -25,7 +27,10 @@ class _HomeState extends State<Home> {
           if (userData.exists) {
             print('Document data: ${userData.data()}');
             if (userData['role'] == 'admin') {
-              Navigator.pushReplacementNamed(context, "Admin");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminPanel()),
+              );
             }
           } else {
             print('Document does not exist on the database');
