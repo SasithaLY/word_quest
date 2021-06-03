@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'adminPanel/adminPanel.dart';
+
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
@@ -25,7 +27,10 @@ class _LoginState extends State<Login> {
           if (userData.exists) {
             print('Document data: ${userData.data()}');
             if (userData['role'] == 'admin') {
-              Navigator.pushReplacementNamed(context, "Admin");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AdminPanel()),
+              );
               print("admin");
             } else {
               Navigator.pushReplacementNamed(context, "/");

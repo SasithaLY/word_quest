@@ -7,6 +7,7 @@ import 'package:word_quest/Login.dart';
 import 'package:word_quest/Signup.dart';
 import 'package:word_quest/StartPage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
