@@ -10,7 +10,7 @@ import 'addQuestions.dart';
 import 'configNames.dart';
 
 class AdminPanel extends StatefulWidget {
-   @override
+  @override
   _AdminPanelState createState() => _AdminPanelState();
 }
 
@@ -88,7 +88,7 @@ class _AdminPanelState extends State<AdminPanel> {
         body: Column(
           children: [
             Container(
-                margin: EdgeInsets.all(20),
+                margin: EdgeInsets.fromLTRB(20, 70, 20, 50),
                 width: double.infinity,
                 child: Text(
                   'Admin Panel',
@@ -105,7 +105,11 @@ class _AdminPanelState extends State<AdminPanel> {
                         MaterialPageRoute(builder: (context) => AddQuestions()),
                       );
                     },
-                    child: Text('Add Questions'))),
+                    child: Text(
+                      'Add Questions',
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ))),
             Container(
                 margin: EdgeInsets.all(20),
                 child: AnimatedButton(
@@ -113,45 +117,48 @@ class _AdminPanelState extends State<AdminPanel> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ViewQuestions()),
+                        MaterialPageRoute(
+                            builder: (context) => ViewQuestions()),
                       );
                     },
-                    child: Text('View/Update Questions'))),
+                    child: Text('View/Update Questions', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
             Container(
                 margin: EdgeInsets.all(20),
                 child: AnimatedButton(
-                    onPressed: () => showDialog<String>( //https://api.flutter.dev/flutter/material/AlertDialog-class.html
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Are yor sure?'),
-                        content: const Text('You will be not able to recover this data.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () => Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
+                    onPressed: () => showDialog<String>(
+                          //https://api.flutter.dev/flutter/material/AlertDialog-class.html
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: const Text('Are yor sure?'),
+                            content: const Text(
+                                'You will be not able to recover this data.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(context, 'Cancel'),
+                                child: const Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  deleteAllRecords();
+                                  Navigator.pop(context, 'OK');
+                                },
+                                child: const Text('Delete'),
+                              ),
+                            ],
                           ),
-                          TextButton(
-                            onPressed: () {
-                              deleteAllRecords();
-                              Navigator.pop(context, 'OK');
-                            },
-                            child: const Text('Delete'),
-                          ),
-                        ],
-                      ),
-                    ),
+                        ),
                     color: Colors.red,
-                    child: Text('Delete All Questions'))),
+                    child: Text('Delete All Questions', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
             Container(
                 margin: EdgeInsets.all(20),
                 child: AnimatedButton(
                     color: Colors.green,
                     onPressed: logout,
-                    child: Text('Logout'))),
+                    child: Text('Logout', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
           ],
         ),
       ),
     );
   }
 }
-

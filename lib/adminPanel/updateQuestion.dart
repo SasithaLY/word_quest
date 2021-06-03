@@ -154,10 +154,11 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
                       }
                     },
                     height: 50,
-                    color: Colors.amber,
+                    color: Colors.green,
                     child: Text(
                       'Update',
                       textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     )),
               ),
               // Container(

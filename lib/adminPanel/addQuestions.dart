@@ -141,10 +141,11 @@ class _AddQuestionsState extends State<AddQuestions> {
                       }
                     },
                     height: 50,
-                    color: Colors.amber,
+                    color: Colors.green,
                     child: Text(
                       'Submit',
                       textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     )),
               ),
               // Container(
