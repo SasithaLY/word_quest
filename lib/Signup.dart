@@ -71,6 +71,10 @@ class _SignupState extends State<Signup> {
         });
   }
 
+  viewLoginPage() async {
+    Navigator.pushReplacementNamed(context, "Login");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +83,7 @@ class _SignupState extends State<Signup> {
           child: Column(
             children: <Widget>[
               SizedBox(
-                height: 40.0,
+                height: 50.0,
               ),
               Container(
                 height: 250,
@@ -162,6 +166,25 @@ class _SignupState extends State<Signup> {
                             style: ElevatedButton.styleFrom(
                                 padding: EdgeInsets.fromLTRB(70, 10, 70, 10)),
                           )),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Already have an account? "),
+                          GestureDetector(
+                            onTap: viewLoginPage,
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

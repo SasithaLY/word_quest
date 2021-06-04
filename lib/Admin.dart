@@ -25,10 +25,12 @@ class _AdminState extends State<Admin> {
     User? firebase_user = await _auth.currentUser;
 
     if (firebase_user != null) {
-      setState(() {
-        this.user = firebase_user;
-        this.isLogged = true;
-      });
+      if (mounted) {
+        setState(() {
+          this.user = firebase_user;
+          this.isLogged = true;
+        });
+      }
     }
   }
 

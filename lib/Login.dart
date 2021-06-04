@@ -14,8 +14,9 @@ class _LoginState extends State<Login> {
   final CollectionReference users =
       FirebaseFirestore.instance.collection("users");
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _resetFormKey = GlobalKey<FormState>();
 
-  String? _email, _password;
+  String? _email, _password, _resetEmail;
 
   bool isSubmit = false;
 
@@ -63,6 +64,35 @@ class _LoginState extends State<Login> {
     }
   }
 
+  sendPasswordResetMail() async {
+    if (_resetFormKey.currentState!.validate()) {
+      _resetFormKey.currentState?.save();
+      Navigator.of(context).pop();
+      try {
+        await _auth.sendPasswordResetEmail(email: _resetEmail.toString());
+
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Email Sent!'),
+                content: Text(
+                    "A link to reset password has been sent to your email address."),
+                actions: <Widget>[
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'))
+                ],
+              );
+            });
+      } on FirebaseAuthException catch (e) {
+        showError(e.message.toString());
+      }
+    }
+  }
+
   showError(String message) {
     showDialog(
         context: context,
@@ -95,7 +125,7 @@ class _LoginState extends State<Login> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(
-                      height: 40.0,
+                      height: 50.0,
                     ),
                     Container(
                       height: 250,
@@ -148,8 +178,52 @@ class _LoginState extends State<Login> {
                                   obscureText: true,
                                   onSaved: (input) => _password = input),
                             ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Reset Password'),
+                                            content: Form(
+                                              key: _resetFormKey,
+                                              child: Container(
+                                                child: TextFormField(
+                                                  validator: (input) {
+                                                    if (input == null ||
+                                                        input.isEmpty) {
+                                                      return 'Enter Email';
+                                                    }
+                                                  },
+                                                  decoration: InputDecoration(
+                                                      labelText: 'Email',
+                                                      prefixIcon:
+                                                          Icon(Icons.email)),
+                                                  onSaved: (input) {
+                                                    _resetEmail = input;
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    sendPasswordResetMail();
+                                                  },
+                                                  child: Text('Send Email'))
+                                            ],
+                                          );
+                                        });
+                                  },
+                                  child: Text("Forgot Password?"),
+                                )
+                              ],
+                            ),
                             SizedBox(
-                              height: 40,
+                              height: 20,
                             ),
                             SizedBox(
                               height: 50,
@@ -181,7 +255,7 @@ class _LoginState extends State<Login> {
                                     "Signup",
                                     style: TextStyle(
                                         color: Colors.green,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                         fontWeight: FontWeight.bold),
                                   ),
                                 ),
