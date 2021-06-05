@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:word_quest/Login.dart';
+import 'package:word_quest/Signup.dart';
 
 class StartPage extends StatefulWidget {
   @override
@@ -20,12 +22,19 @@ class _StartPageState extends State<StartPage> {
   GoogleSignInAccount get user => _user!;
 
   bool isSubmit = false;
+
   viewLoginPage() async {
-    Navigator.pushReplacementNamed(context, "Login");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Login()),
+    );
   }
 
   viewSignupPage() async {
-    Navigator.pushReplacementNamed(context, "Signup");
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Signup()),
+    );
   }
 
   checkAuthentication() async {
@@ -33,7 +42,6 @@ class _StartPageState extends State<StartPage> {
       if (user != null) {
         users.doc(user.uid).get().then((DocumentSnapshot userData) async {
           if (userData.exists) {
-            print('Document data: ${userData.data()}');
             if (userData['role'] == 'admin') {
               Navigator.pushReplacementNamed(context, "Admin");
               print("admin");
@@ -53,7 +61,6 @@ class _StartPageState extends State<StartPage> {
             print('Document does not exist on the database');
             _auth.currentUser!.reload();
 
-            //String name = _user!.displayName!.split(" ").first.toString();
             try {
               await users.doc(user.uid).set({
                 "name": user.displayName,
@@ -66,8 +73,6 @@ class _StartPageState extends State<StartPage> {
             } catch (e) {
               print(e.toString());
             }
-
-            //
           }
         });
       }

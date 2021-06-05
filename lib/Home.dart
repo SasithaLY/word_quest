@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:word_quest/LearderBoard.dart';
+import 'package:word_quest/LeaderBoard.dart';
 
 import 'adminPanel/adminPanel.dart';
 
@@ -15,6 +15,8 @@ class _HomeState extends State<Home> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference users =
       FirebaseFirestore.instance.collection("users");
+  final CollectionReference scores =
+      FirebaseFirestore.instance.collection("scores");
   final googleSignIn = GoogleSignIn();
   User? user;
   bool isLogged = false;
@@ -70,6 +72,29 @@ class _HomeState extends State<Home> {
     }
   }
 
+  play() async {
+    try {
+      scores
+          .doc(_auth.currentUser!.uid)
+          .get()
+          .then((DocumentSnapshot data) async {
+        if (data.exists) {
+          /* Navigate to Play page */
+          print("Exist");
+        } else {
+          await scores.doc(_auth.currentUser!.uid).set({
+            "score": 0,
+          }).then((value) {
+            /* Navigate to Play page */
+            print("Score created");
+          });
+        }
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
   void initState() {
     this.getUser();
@@ -111,6 +136,18 @@ class _HomeState extends State<Home> {
                         fit: BoxFit.contain,
                       ),
                     ),
+                    ElevatedButton(
+                        onPressed: play,
+                        child: Text(
+                          'PLAY',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.only(left: 30, right: 30),
+                        )),
                     ElevatedButton(
                         onPressed: () {
                           Navigator.push(

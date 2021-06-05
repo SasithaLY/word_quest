@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:word_quest/Admin.dart';
 import 'package:word_quest/Home.dart';
-import 'package:word_quest/LearderBoard.dart';
+import 'package:word_quest/LeaderBoard.dart';
 import 'package:word_quest/Login.dart';
 import 'package:word_quest/Signup.dart';
 import 'package:word_quest/StartPage.dart';
