@@ -38,15 +38,28 @@ class _StartPageState extends State<StartPage> {
               Navigator.pushReplacementNamed(context, "Admin");
               print("admin");
             } else {
-              Navigator.pushReplacementNamed(context, "/");
-              print("user");
+              try {
+                await users
+                    .doc(user.uid)
+                    .update({"pic": user.photoURL}).then((value) {
+                  Navigator.pushReplacementNamed(context, "/");
+                  isSubmit = false;
+                });
+              } catch (e) {
+                print(e.toString());
+              }
             }
           } else {
             print('Document does not exist on the database');
             _auth.currentUser!.reload();
+
+            //String name = _user!.displayName!.split(" ").first.toString();
             try {
-              await users.doc(user.uid).set(
-                  {"name": user.displayName, "role": "user"}).then((value) {
+              await users.doc(user.uid).set({
+                "name": user.displayName,
+                "role": "user",
+                "pic": user.photoURL
+              }).then((value) {
                 Navigator.pushReplacementNamed(context, "/");
                 isSubmit = false;
               });

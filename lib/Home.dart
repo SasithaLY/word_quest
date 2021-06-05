@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:word_quest/LearderBoard.dart';
 
 import 'adminPanel/adminPanel.dart';
 
@@ -91,7 +92,7 @@ class _HomeState extends State<Home> {
                         Container(
                           padding: EdgeInsets.only(left: 20),
                           child: Text(
-                            "Hello ${user?.displayName}, Let's Play!",
+                            "Hello ${user?.displayName?.split(" ").first.toString()}, Let's Play!",
                             textAlign: TextAlign.left,
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold),
@@ -110,6 +111,24 @@ class _HomeState extends State<Home> {
                         fit: BoxFit.contain,
                       ),
                     ),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LeaderBoard()),
+                          );
+                        },
+                        child: Text(
+                          'LEADER BOARD',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.only(left: 30, right: 30),
+                        )),
                     ElevatedButton(
                         onPressed: logout,
                         child: Text(

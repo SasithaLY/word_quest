@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:word_quest/Admin.dart';
 import 'package:word_quest/Home.dart';
+import 'package:word_quest/LearderBoard.dart';
 import 'package:word_quest/Login.dart';
 import 'package:word_quest/Signup.dart';
 import 'package:word_quest/StartPage.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         "Signup": (BuildContext context) => Signup(),
         "Start": (BuildContext context) => StartPage(),
         "Admin": (BuildContext context) => Admin(),
+        "LeaderBoard": (BuildContext context) => LeaderBoard()
       },
     );
   }
