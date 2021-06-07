@@ -20,12 +20,17 @@ class _AdminPanelState extends State<AdminPanel> {
   final googleSignIn = GoogleSignIn();
   User? user;
   bool isLogged = false;
+  double initialOpacityLevel = 0.0;
+
 
   checkAuthentication() async {
     _auth.authStateChanges().listen((user) {
       if (user == null) {
         Navigator.pushReplacementNamed(context, "Start");
       }
+      setState(() {
+        initialOpacityLevel = 1;
+      });
     });
   }
 
@@ -86,7 +91,10 @@ class _AdminPanelState extends State<AdminPanel> {
         appBar: AppBar(
           title: Text('Word Quest Configurations'),
         ),
-        body: Column(
+        body: AnimatedOpacity(
+          duration: Duration(seconds: 3),
+          opacity: initialOpacityLevel,
+        child: Column(
           children: [
             Container(
                 margin: EdgeInsets.fromLTRB(20, 70, 20, 50),
@@ -127,28 +135,28 @@ class _AdminPanelState extends State<AdminPanel> {
                 margin: EdgeInsets.all(20),
                 child: AnimatedButton(
                     onPressed: () => showDialog<String>(
-                          //https://api.flutter.dev/flutter/material/AlertDialog-class.html
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Are you sure?'),
-                            content: const Text(
-                                'You will be not able to recover this data.'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () =>
-                                    Navigator.pop(context, 'Cancel'),
-                                child: const Text('Cancel'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  deleteAllRecords();
-                                  Navigator.pop(context, 'OK');
-                                },
-                                child: const Text('Delete'),
-                              ),
-                            ],
+                      //https://api.flutter.dev/flutter/material/AlertDialog-class.html
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Are you sure?'),
+                        content: const Text(
+                            'You will be not able to recover this data.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () =>
+                                Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
                           ),
-                        ),
+                          TextButton(
+                            onPressed: () {
+                              deleteAllRecords();
+                              Navigator.pop(context, 'OK');
+                            },
+                            child: const Text('Delete'),
+                          ),
+                        ],
+                      ),
+                    ),
                     color: Colors.red,
                     child: Text('Delete All Questions', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
             Container(
@@ -164,15 +172,16 @@ class _AdminPanelState extends State<AdminPanel> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Text(
-                    "You're logged in as ${user?.displayName?.split(" ").first.toString()}",
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                        fontSize: 10, fontWeight: FontWeight.bold),
-                  ),
+                  "You're logged in as ${user?.displayName?.split(" ").first.toString()}",
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                      fontSize: 10, fontWeight: FontWeight.bold),
+                ),
               ],
             )
           ],
-        ),
+        ),)
+        ,
       ),
     );
   }
