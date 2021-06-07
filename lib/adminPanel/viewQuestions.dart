@@ -81,39 +81,43 @@ class _ViewQuestionsState extends State<ViewQuestions> {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  i['data']['correctAnswer'],
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    color: Colors.black.withOpacity(0.6),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  i['data']['answer2'],
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  i['data']['answer3'],
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text(
-                                  i['data']['answer4'],
-                                  style: TextStyle(
-                                      color: Colors.black.withOpacity(0.6)),
-                                ),
+                              ListBody(
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      child: Text(
+                                        i['data']['correctAnswer'],
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.6),
+                                        fontWeight: FontWeight.bold),
+                                      )),
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      child: Text(
+                                        i['data']['answer2'],
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.6)),
+                                      )),
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      child: Text(
+                                        i['data']['answer3'],
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.6)),
+                                      )),
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      child: Text(
+                                        i['data']['answer4'],
+                                        style: TextStyle(
+                                            color:
+                                                Colors.black.withOpacity(0.6)),
+                                      )),
+                                ],
                               ),
                               ButtonBar(
                                 alignment: MainAxisAlignment.end,
@@ -135,7 +139,7 @@ class _ViewQuestionsState extends State<ViewQuestions> {
                                       context: context,
                                       builder: (BuildContext context) =>
                                           AlertDialog(
-                                        title: const Text('Are yor sure?'),
+                                        title: const Text('Are you sure?'),
                                         content: const Text(
                                             'You will be not able to recover this data.'),
                                         actions: <Widget>[
@@ -170,10 +174,11 @@ class _ViewQuestionsState extends State<ViewQuestions> {
                     )
                 else
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
                     child: Text(
-                      'No questions yet..',
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      'No Questions yet..\n\n Please proceed to "Add Questions" section to get started!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.green),
                     ),
                   ),
               ],

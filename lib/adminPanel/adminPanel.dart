@@ -78,12 +78,13 @@ class _AdminPanelState extends State<AdminPanel> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.green,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Quiz App Configurations'),
+          title: Text('Word Quest Configurations'),
         ),
         body: Column(
           children: [
@@ -92,7 +93,7 @@ class _AdminPanelState extends State<AdminPanel> {
                 width: double.infinity,
                 child: Text(
                   'Admin Panel',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 )),
             Container(
@@ -129,7 +130,7 @@ class _AdminPanelState extends State<AdminPanel> {
                           //https://api.flutter.dev/flutter/material/AlertDialog-class.html
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Are yor sure?'),
+                            title: const Text('Are you sure?'),
                             content: const Text(
                                 'You will be not able to recover this data.'),
                             actions: <Widget>[
@@ -156,6 +157,20 @@ class _AdminPanelState extends State<AdminPanel> {
                     color: Colors.green,
                     onPressed: logout,
                     child: Text('Logout', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                Text(
+                    "You're logged in as ${user?.displayName?.split(" ").first.toString()}",
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.bold),
+                  ),
+              ],
+            )
           ],
         ),
       ),

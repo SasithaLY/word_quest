@@ -59,11 +59,16 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
           child: ListView(
             children: [
               Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.fromLTRB(40, 40, 40, 10),
+                  child: Text('You can update your questions here. The correct definition should be updated to the "Correct Answer"!', style: TextStyle(color: Colors.green),)
+              ),
+              Container(
                 width: double.infinity,
                 margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
                 child: TextFormField(
                   initialValue: details['data']['question'],
-                  decoration: InputDecoration(labelText: 'The Question'),
+                  decoration: InputDecoration(labelText: 'The Question Word'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
