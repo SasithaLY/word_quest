@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:word_quest/LeaderBoard.dart';
 
+import 'package:word_quest/LeaderBoard.dart';
 import 'adminPanel/adminPanel.dart';
+import './Quiz.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -137,7 +138,12 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     ElevatedButton(
-                        onPressed: play,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Quiz()),
+                          );
+                        },
                         child: Text(
                           'PLAY',
                           style: TextStyle(
