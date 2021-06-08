@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:word_quest/theme/colors.dart';
+
+import './Question.dart';
 
 class Quiz extends StatefulWidget {
   @override
@@ -17,6 +20,7 @@ class _QuizState extends State<Quiz> {
 
   @override
   Widget build(BuildContext context) {
+    //question data should come from the firebase db
     var questions = [
       'What\'s your favorite color?',
       'What\'s your favorite animal?',
@@ -25,10 +29,11 @@ class _QuizState extends State<Quiz> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Quiz'),
+          backgroundColor: primary,
         ),
         body: Column(
           children: [
-            Text(
+            Question(
               questions[_questionIndex],
             ),
             RaisedButton(
