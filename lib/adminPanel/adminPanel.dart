@@ -91,7 +91,7 @@ class _AdminPanelState extends State<AdminPanel> {
         appBar: AppBar(
           title: Text('Word Quest Configurations'),
         ),
-        body: AnimatedOpacity(
+        body: AnimatedOpacity( //https://flutter.dev/docs/cookbook/animation/opacity-animation
           duration: Duration(seconds: 3),
           opacity: initialOpacityLevel,
         child: Column(

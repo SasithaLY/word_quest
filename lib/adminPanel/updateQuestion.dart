@@ -61,7 +61,7 @@ class _UpdateQuestionState extends State<UpdateQuestion> {
               Container(
                   width: double.infinity,
                   margin: EdgeInsets.fromLTRB(40, 40, 40, 10),
-                  child: Text('You can update your questions here. The correct definition should be updated to the "Correct Answer"!', style: TextStyle(color: Colors.green),)
+                  child: Text('You can update your questions here. The correct word should be updated to the "Correct Answer"!', style: TextStyle(color: Colors.green),)
               ),
               Container(
                 width: double.infinity,
