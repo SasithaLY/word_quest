@@ -42,9 +42,19 @@ class _QuizState extends State<Quiz> {
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _resetQuiz() {
     setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  void _answerQuestion(int score) {
+    setState(() {
+      _totalScore += score;
+
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
@@ -68,18 +78,33 @@ class _QuizState extends State<Quiz> {
                   Question(
                     _questions[_questionIndex]['questionText'],
                   ),
-                  ...(_questions[_questionIndex]['answers'] as List<String>)
-                      .map((answer) {
-                    return Answer(_answerQuestion, answer);
+                  ...(_questions[_questionIndex]['answers']).map((answer) {
+                    return Answer(
+                        () => _answerQuestion(answer['score']), answer['text']);
                   }).toList()
                 ],
               )
             : Center(
-                child: Container(
-                  color: Colors.yellow,
-                  child: Text('Congratulations! You did it',
-                      textScaleFactor: 2,
-                      style: TextStyle(color: Colors.green)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Congratulations! You did it \n your score is \n' +
+                          _totalScore.toString(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    FlatButton(
+                        textColor: Colors.red,
+                        hoverColor: Colors.green,
+                        onPressed: _resetQuiz,
+                        child: Text('Restart Quiz'))
+                  ],
                 ),
               ),
       ),
