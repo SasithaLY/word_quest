@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:word_quest/theme/colors.dart';
 
 import './Question.dart';
+import './Answer.dart';
 
 class Quiz extends StatefulWidget {
   @override
@@ -29,28 +30,21 @@ class _QuizState extends State<Quiz> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('Quiz'),
-          backgroundColor: primary,
+          leading: IconButton(
+            onPressed: () => {Navigator.pop(context)},
+            icon: Icon(Icons.arrow_back),
+          ),
+          backgroundColor: Colors.green,
         ),
         body: Column(
           children: [
             Question(
               questions[_questionIndex],
             ),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: _answerQuestion,
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: () => print('Answer 2 chosen!'),
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: () {
-                // ...
-                print('Answer 3 chosen');
-              },
-            ),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
+            Answer(_answerQuestion),
           ],
         ),
       ),
