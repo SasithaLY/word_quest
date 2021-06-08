@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:word_quest/theme/colors.dart';
 
 class Answer extends StatelessWidget {
   final VoidCallback answerHandler;
+  final String answerText;
 
-  Answer(this.answerHandler);
+  Answer(this.answerHandler, this.answerText);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +13,8 @@ class Answer extends StatelessWidget {
       width: double.infinity,
       child: RaisedButton(
         color: Colors.green,
-        child: Text('Answer 1'),
+        textColor: white,
+        child: Text(answerText),
         onPressed: answerHandler,
       ),
     );
