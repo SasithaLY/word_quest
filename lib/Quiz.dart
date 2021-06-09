@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import './adminPanel/configNames.dart';
 import 'package:word_quest/theme/colors.dart';
 
 import './Question.dart';
@@ -10,6 +14,59 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  var questionsArray = [];
+
+  _QuizState() {
+    getAllQuestions();
+  }
+
+  Future<void> getAllQuestions() async {
+    try {
+      firestore
+          .collection(ConfigNames.DATABASE_NAME)
+          .snapshots()
+          .listen((event) {
+        questionsArray.clear();
+        event.docs.forEach((element) {
+          var infor = {
+            'id': element.id,
+            'data': element.data(),
+          };
+          // print(infor);
+
+          try {
+            setState(() {
+              questionsArray.insert(0, infor);
+              // print(questionsArray);
+            });
+
+            questionsArray.forEach((element) {
+              List individual = [
+                {
+                  'questionText': element['data']['question'],
+                  'answers': [
+                    {
+                      'text': element['data']['correctAnswer'],
+                      'text': element['data']['answer2'],
+                      'text': element['data']['answer3'],
+                      'text': element['data']['answer4']
+                    }
+                  ]
+                }
+              ];
+              print(individual);
+            });
+          } catch (e) {
+            print('');
+          }
+        });
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   //question data should come from the firebase db
   final List _questions = const [
     {

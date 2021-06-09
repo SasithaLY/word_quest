@@ -84,17 +84,19 @@ class _ViewQuestionsState extends State<ViewQuestions> {
                               ListBody(
                                 children: [
                                   Padding(
-                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 10, 10, 10),
                                       child: Text(
                                         i['data']['correctAnswer'],
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             color:
                                                 Colors.black.withOpacity(0.6),
-                                        fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold),
                                       )),
                                   Padding(
-                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 10, 10, 10),
                                       child: Text(
                                         i['data']['answer2'],
                                         style: TextStyle(
@@ -102,7 +104,8 @@ class _ViewQuestionsState extends State<ViewQuestions> {
                                                 Colors.black.withOpacity(0.6)),
                                       )),
                                   Padding(
-                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 10, 10, 10),
                                       child: Text(
                                         i['data']['answer3'],
                                         style: TextStyle(
@@ -110,7 +113,8 @@ class _ViewQuestionsState extends State<ViewQuestions> {
                                                 Colors.black.withOpacity(0.6)),
                                       )),
                                   Padding(
-                                      padding: const EdgeInsets.fromLTRB(20, 10, 10, 10),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          20, 10, 10, 10),
                                       child: Text(
                                         i['data']['answer4'],
                                         style: TextStyle(
