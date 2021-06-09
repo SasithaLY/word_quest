@@ -16,6 +16,7 @@ class Quiz extends StatefulWidget {
 class _QuizState extends State<Quiz> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   var questionsArray = [];
+  List _questions = [];
 
   _QuizState() {
     getAllQuestions();
@@ -42,18 +43,17 @@ class _QuizState extends State<Quiz> {
             });
 
             questionsArray.forEach((element) {
-              List individual = [
-                {
-                  'questionText': element['data']['question'],
-                  'answers': [
-                    {'text': element['data']['correctAnswer']},
-                    {'text': element['data']['answer2']},
-                    {'text': element['data']['answer3']},
-                    {'text': element['data']['answer4']},
-                  ]
-                }
-              ];
-              print(individual);
+              var individual = {
+                'questionText': element['data']['question'],
+                'answers': [
+                  {'text': element['data']['correctAnswer'], 'score': 1},
+                  {'text': element['data']['answer2'], 'score': 0},
+                  {'text': element['data']['answer3'], 'score': 0},
+                  {'text': element['data']['answer4'], 'score': 0},
+                ]
+              };
+              _questions.add(individual);
+              print(_questions);
             });
           } catch (e) {
             print('');
@@ -66,35 +66,35 @@ class _QuizState extends State<Quiz> {
   }
 
   //question data should come from the firebase db
-  final List _questions = const [
-    {
-      'questionText': 'What\'s the color of dark?',
-      'answers': [
-        {'text': 'Black', 'score': 1},
-        {'text': 'Red', 'score': 0},
-        {'text': 'Green', 'score': 0},
-        {'text': 'Yellow', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'Who\'s the king of animals?',
-      'answers': [
-        {'text': 'Tiger', 'score': 0},
-        {'text': 'Bear', 'score': 0},
-        {'text': 'Lion', 'score': 1},
-        {'text': 'Dog', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'What\'s the best private university in Sri Lanka?',
-      'answers': [
-        {'text': 'IIT', 'score': 0},
-        {'text': 'NIBM', 'score': 0},
-        {'text': 'NSBM', 'score': 0},
-        {'text': 'SLIIT', 'score': 1},
-      ],
-    },
-  ];
+  // final List _questions = const [
+  //   {
+  //     'questionText': 'What\'s the color of dark?',
+  //     'answers': [
+  //       {'text': 'Black', 'score': 1},
+  //       {'text': 'Red', 'score': 0},
+  //       {'text': 'Green', 'score': 0},
+  //       {'text': 'Yellow', 'score': 0},
+  //     ],
+  //   },
+  //   {
+  //     'questionText': 'Who\'s the king of animals?',
+  //     'answers': [
+  //       {'text': 'Tiger', 'score': 0},
+  //       {'text': 'Bear', 'score': 0},
+  //       {'text': 'Lion', 'score': 1},
+  //       {'text': 'Dog', 'score': 0},
+  //     ],
+  //   },
+  //   {
+  //     'questionText': 'What\'s the best private university in Sri Lanka?',
+  //     'answers': [
+  //       {'text': 'IIT', 'score': 0},
+  //       {'text': 'NIBM', 'score': 0},
+  //       {'text': 'NSBM', 'score': 0},
+  //       {'text': 'SLIIT', 'score': 1},
+  //     ],
+  //   },
+  // ];
 
   var _questionIndex = 0;
   var _totalScore = 0;
