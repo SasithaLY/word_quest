@@ -46,12 +46,10 @@ class _QuizState extends State<Quiz> {
                 {
                   'questionText': element['data']['question'],
                   'answers': [
-                    {
-                      'text': element['data']['correctAnswer'],
-                      'text': element['data']['answer2'],
-                      'text': element['data']['answer3'],
-                      'text': element['data']['answer4']
-                    }
+                    {'text': element['data']['correctAnswer']},
+                    {'text': element['data']['answer2']},
+                    {'text': element['data']['answer3']},
+                    {'text': element['data']['answer4']},
                   ]
                 }
               ];
