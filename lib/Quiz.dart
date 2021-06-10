@@ -18,7 +18,6 @@ class _QuizState extends State<Quiz> {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   var questionsArray = [];
-  var _leadboard = [];
   List _questions = [];
   int _userScore = 0;
   var _userId;
@@ -72,24 +71,25 @@ class _QuizState extends State<Quiz> {
   }
 
   Future readLeadboard() async {
+
     try {
       firestore.collection('scores').snapshots().listen((event) {
-        _leadboard.clear();
         event.docs.forEach((element) {
-          var infor = {
-            'id': element.id,
-            'data': element.data(),
-          };
           if (element.id == _auth.currentUser!.uid) {
-            _userId = element["id"];
-            _userScore = element["score"];
-          }
-          // print(_userScore);
+            print(element.id.toString() + 'sexxxxxxxxxxxxxxxxxxxxxx' + element.data()['score'].toString());
+            var infor = {
+              'id': element.id,
+              'data': element.data()['score'],
+            };
 
-          setState(() {
-            _leadboard.insert(0, infor);
-            // print(leadboard);
-          });
+            setState(() {
+              _userId = infor['id'];
+
+              _userScore = infor['data'];
+              // _leadboard.insert(0, infor);
+            });
+
+          }
         });
         // print(_leadboard);
       });
@@ -99,10 +99,11 @@ class _QuizState extends State<Quiz> {
   }
 
   Future<void> _addScoreToLeadboard(int score) async {
+    print(score.toString() + ' asd' + _userId.toString());
     if (score > _userScore) {
       try {
         await firestore.collection('scores').doc('$_userId').update({
-          'score': '$_totalScore',
+          'score': _totalScore,
         });
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('New Highscore!')));
