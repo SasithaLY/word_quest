@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import './adminPanel/configNames.dart';
@@ -14,12 +14,20 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   var questionsArray = [];
+  var _leadboard = [];
   List _questions = [];
+  int _userScore = 0;
+  var _userId;
+  var _questionIndex = 0;
+  var _totalScore = 0;
 
   _QuizState() {
     getAllQuestions();
+    readLeadboard();
   }
 
   Future<void> getAllQuestions() async {
@@ -35,33 +43,72 @@ class _QuizState extends State<Quiz> {
             'data': element.data(),
           };
           // print(infor);
-
-          try {
-            setState(() {
-              questionsArray.insert(0, infor);
-              // print(questionsArray);
-            });
-
-            questionsArray.forEach((element) {
-              var individual = {
-                'questionText': element['data']['question'],
-                'answers': [
-                  {'text': element['data']['correctAnswer'], 'score': 1},
-                  {'text': element['data']['answer2'], 'score': 0},
-                  {'text': element['data']['answer3'], 'score': 0},
-                  {'text': element['data']['answer4'], 'score': 0},
-                ]
-              };
-              _questions.add(individual);
-              print(_questions);
-            });
-          } catch (e) {
-            print('');
-          }
+          setState(() {
+            questionsArray.insert(0, infor);
+            // print(questionsArray);
+          });
         });
+        try {
+          questionsArray.forEach((element) {
+            var individual = {
+              'questionText': element['data']['question'],
+              'answers': [
+                {'text': element['data']['correctAnswer'], 'score': 1},
+                {'text': element['data']['answer2'], 'score': 0},
+                {'text': element['data']['answer3'], 'score': 0},
+                {'text': element['data']['answer4'], 'score': 0},
+              ]
+            };
+            _questions.add(individual);
+            // print(_questions);
+          });
+        } catch (e) {
+          print('');
+        }
       });
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future readLeadboard() async {
+    try {
+      firestore.collection('scores').snapshots().listen((event) {
+        _leadboard.clear();
+        event.docs.forEach((element) {
+          var infor = {
+            'id': element.id,
+            'data': element.data(),
+          };
+          if (element.id == _auth.currentUser!.uid) {
+            _userId = element["id"];
+            _userScore = element["score"];
+          }
+          // print(_userScore);
+
+          setState(() {
+            _leadboard.insert(0, infor);
+            // print(leadboard);
+          });
+        });
+        // print(_leadboard);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _addScoreToLeadboard(int score) async {
+    if (score > _userScore) {
+      try {
+        await firestore.collection('scores').doc('$_userId').update({
+          'score': '$_totalScore',
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('New Highscore!')));
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -96,10 +143,8 @@ class _QuizState extends State<Quiz> {
   //   },
   // ];
 
-  var _questionIndex = 0;
-  var _totalScore = 0;
-
   void _resetQuiz() {
+    _addScoreToLeadboard(_totalScore);
     setState(() {
       _questionIndex = 0;
       _totalScore = 0;
