@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import './adminPanel/configNames.dart';
 import 'package:word_quest/theme/colors.dart';
 
 import './Question.dart';
@@ -10,41 +14,138 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  //question data should come from the firebase db
-  final List _questions = const [
-    {
-      'questionText': 'What\'s the color of dark?',
-      'answers': [
-        {'text': 'Black', 'score': 1},
-        {'text': 'Red', 'score': 0},
-        {'text': 'Green', 'score': 0},
-        {'text': 'Yellow', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'Who\'s the king of animals?',
-      'answers': [
-        {'text': 'Tiger', 'score': 0},
-        {'text': 'Bear', 'score': 0},
-        {'text': 'Lion', 'score': 1},
-        {'text': 'Dog', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'What\'s the best private university in Sri Lanka?',
-      'answers': [
-        {'text': 'IIT', 'score': 0},
-        {'text': 'NIBM', 'score': 0},
-        {'text': 'NSBM', 'score': 0},
-        {'text': 'SLIIT', 'score': 1},
-      ],
-    },
-  ];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
+  var questionsArray = [];
+  List _questions = [];
+  int _userScore = 0;
+  var _userId;
   var _questionIndex = 0;
   var _totalScore = 0;
 
+  _QuizState() {
+    getAllQuestions();
+    readLeadboard();
+  }
+
+  Future<void> getAllQuestions() async {
+    try {
+      firestore
+          .collection(ConfigNames.DATABASE_NAME)
+          .snapshots()
+          .listen((event) {
+        questionsArray.clear();
+        event.docs.forEach((element) {
+          var infor = {
+            'id': element.id,
+            'data': element.data(),
+          };
+          // print(infor);
+          setState(() {
+            questionsArray.insert(0, infor);
+            // print(questionsArray);
+          });
+        });
+        try {
+          questionsArray.forEach((element) {
+            var individual = {
+              'questionText': element['data']['question'],
+              'answers': [
+                {'text': element['data']['correctAnswer'], 'score': 1},
+                {'text': element['data']['answer2'], 'score': 0},
+                {'text': element['data']['answer3'], 'score': 0},
+                {'text': element['data']['answer4'], 'score': 0},
+              ]
+            };
+            _questions.add(individual);
+            // print(_questions);
+          });
+        } catch (e) {
+          print('');
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future readLeadboard() async {
+
+    try {
+      firestore.collection('scores').snapshots().listen((event) {
+        event.docs.forEach((element) {
+          if (element.id == _auth.currentUser!.uid) {
+            print(element.id.toString() + 'sexxxxxxxxxxxxxxxxxxxxxx' + element.data()['score'].toString());
+            var infor = {
+              'id': element.id,
+              'data': element.data()['score'],
+            };
+
+            setState(() {
+              _userId = infor['id'];
+
+              _userScore = infor['data'];
+              // _leadboard.insert(0, infor);
+            });
+
+          }
+        });
+        // print(_leadboard);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _addScoreToLeadboard(int score) async {
+    print(score.toString() + ' asd' + _userId.toString());
+    if (score > _userScore) {
+      try {
+        await firestore.collection('scores').doc('$_userId').update({
+          'score': _totalScore.toInt(),
+        });
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('New Highscore!')));
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  //question data should come from the firebase db
+  // final List _questions = const [
+  //   {
+  //     'questionText': 'What\'s the color of dark?',
+  //     'answers': [
+  //       {'text': 'Black', 'score': 1},
+  //       {'text': 'Red', 'score': 0},
+  //       {'text': 'Green', 'score': 0},
+  //       {'text': 'Yellow', 'score': 0},
+  //     ],
+  //   },
+  //   {
+  //     'questionText': 'Who\'s the king of animals?',
+  //     'answers': [
+  //       {'text': 'Tiger', 'score': 0},
+  //       {'text': 'Bear', 'score': 0},
+  //       {'text': 'Lion', 'score': 1},
+  //       {'text': 'Dog', 'score': 0},
+  //     ],
+  //   },
+  //   {
+  //     'questionText': 'What\'s the best private university in Sri Lanka?',
+  //     'answers': [
+  //       {'text': 'IIT', 'score': 0},
+  //       {'text': 'NIBM', 'score': 0},
+  //       {'text': 'NSBM', 'score': 0},
+  //       {'text': 'SLIIT', 'score': 1},
+  //     ],
+  //   },
+  // ];
+
   void _resetQuiz() {
+    _addScoreToLeadboard(_totalScore);
     setState(() {
       _questionIndex = 0;
       _totalScore = 0;
