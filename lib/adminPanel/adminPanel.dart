@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+// import 'package:word_quest/adminPanel/ViewAdmins.dart';
 import 'package:word_quest/adminPanel/viewQuestions.dart';
 
 import 'addQuestions.dart';
@@ -21,7 +22,6 @@ class _AdminPanelState extends State<AdminPanel> {
   User? user;
   bool isLogged = false;
   double initialOpacityLevel = 0.0;
-
 
   checkAuthentication() async {
     _auth.authStateChanges().listen((user) {
@@ -91,97 +91,124 @@ class _AdminPanelState extends State<AdminPanel> {
         appBar: AppBar(
           title: Text('Word Quest Configurations'),
         ),
-        body: AnimatedOpacity( //https://flutter.dev/docs/cookbook/animation/opacity-animation
-          duration: Duration(seconds: 3),
+        body: AnimatedOpacity(
+          //https://flutter.dev/docs/cookbook/animation/opacity-animation
+          duration: Duration(seconds: 1),
           opacity: initialOpacityLevel,
-        child: Column(
-          children: [
-            Container(
-                margin: EdgeInsets.fromLTRB(20, 70, 20, 50),
-                width: double.infinity,
-                child: Text(
-                  'Admin Panel',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                )),
-            Container(
-                margin: EdgeInsets.all(20),
-                child: AnimatedButton(
-                    color: Colors.green,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AddQuestions()),
-                      );
-                    },
-                    child: Text(
-                      'Add Questions',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ))),
-            Container(
-                margin: EdgeInsets.all(20),
-                child: AnimatedButton(
-                    color: Colors.green,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ViewQuestions()),
-                      );
-                    },
-                    child: Text('View/Update Questions', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
-            Container(
-                margin: EdgeInsets.all(20),
-                child: AnimatedButton(
-                    onPressed: () => showDialog<String>(
-                      //https://api.flutter.dev/flutter/material/AlertDialog-class.html
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: const Text('Are you sure?'),
-                        content: const Text(
-                            'You will be not able to recover this data.'),
-                        actions: <Widget>[
-                          TextButton(
-                            onPressed: () =>
-                                Navigator.pop(context, 'Cancel'),
-                            child: const Text('Cancel'),
+          child: Column(
+            children: [
+              Container(
+                  margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
+                  width: double.infinity,
+                  child: Text(
+                    'Admin Panel',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  )),
+              Container(
+                  margin: EdgeInsets.all(20),
+                  child: AnimatedButton(
+                      color: Colors.green,
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => ViewAdmins()),
+                        // );
+                      },
+                      child: Text(
+                        'View Admins',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ))),
+              Container(
+                  margin: EdgeInsets.all(20),
+                  child: AnimatedButton(
+                      color: Colors.green,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddQuestions()),
+                        );
+                      },
+                      child: Text(
+                        'Add Questions',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ))),
+              Container(
+                  margin: EdgeInsets.all(20),
+                  child: AnimatedButton(
+                      color: Colors.green,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ViewQuestions()),
+                        );
+                      },
+                      child: Text(
+                        'View/Update Questions',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ))),
+              Container(
+                  margin: EdgeInsets.all(20),
+                  child: AnimatedButton(
+                      onPressed: () => showDialog<String>(
+                            //https://api.flutter.dev/flutter/material/AlertDialog-class.html
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Are you sure?'),
+                              content: const Text(
+                                  'You will be not able to recover this data.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    deleteAllRecords();
+                                    Navigator.pop(context, 'OK');
+                                  },
+                                  child: const Text('Delete'),
+                                ),
+                              ],
+                            ),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              deleteAllRecords();
-                              Navigator.pop(context, 'OK');
-                            },
-                            child: const Text('Delete'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    color: Colors.red,
-                    child: Text('Delete All Questions', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
-            Container(
-                margin: EdgeInsets.all(20),
-                child: AnimatedButton(
-                    color: Colors.green,
-                    onPressed: logout,
-                    child: Text('Logout', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),))),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  "You're logged in as ${user?.displayName?.split(" ").first.toString()}",
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                      fontSize: 10, fontWeight: FontWeight.bold),
-                ),
-              ],
-            )
-          ],
-        ),)
-        ,
+                      color: Colors.red,
+                      child: Text(
+                        'Delete All Questions',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ))),
+              Container(
+                  margin: EdgeInsets.all(20),
+                  child: AnimatedButton(
+                      color: Colors.green,
+                      onPressed: logout,
+                      child: Text(
+                        'Logout',
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
+                      ))),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  Text(
+                    "You're logged in as ${user?.displayName?.split(" ").first.toString()}",
+                    textAlign: TextAlign.right,
+                    style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

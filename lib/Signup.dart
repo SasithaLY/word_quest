@@ -45,7 +45,7 @@ class _SignupState extends State<Signup> {
 
           await users
               .doc(user.uid)
-              .set({"name": name, "role": "user", "pic": ""});
+              .set({"name": name, "role": "user", "pic": "", "email": email});
         }
       } on FirebaseAuthException catch (e) {
         showError(e.message.toString());
