@@ -64,6 +64,7 @@ class _QuizState extends State<Quiz> {
             _questions.add(individual);
             // print(_questions);
           });
+          _questions.shuffle();
         } catch (e) {
           print('');
         }
@@ -146,6 +147,7 @@ class _QuizState extends State<Quiz> {
 
   void _resetQuiz() {
     _addScoreToLeadboard(_totalScore);
+    _questions.shuffle();
     setState(() {
       _questionIndex = 0;
       _totalScore = 0;
