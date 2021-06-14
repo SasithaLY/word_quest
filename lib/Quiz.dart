@@ -103,7 +103,7 @@ class _QuizState extends State<Quiz> {
     if (score > _userScore) {
       try {
         await firestore.collection('scores').doc('$_userId').update({
-          'score': _totalScore,
+          'score': _totalScore.toInt(),
         });
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('New Highscore!')));

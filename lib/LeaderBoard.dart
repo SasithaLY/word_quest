@@ -101,15 +101,13 @@ class _LeaderBoardState extends State<LeaderBoard> {
             child: userIndex < 0
                 ? Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: 
-                        Text(
-                          "Your score will be displayed here once you start playing.",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                             ),
-                        )
-                      )
+                    child: Text(
+                      "Your score will be displayed here once you start playing.",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ))
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -155,7 +153,6 @@ class _LeaderBoardState extends State<LeaderBoard> {
           ),
           Flexible(
               child: SizedBox(
-                  height: 500.0,
                   child: ListView.builder(
                       itemCount: scoreList.length,
                       itemBuilder: (context, index) {
