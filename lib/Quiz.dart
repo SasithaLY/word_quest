@@ -211,15 +211,28 @@ class _QuizState extends State<Quiz> {
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green[600],
                             textStyle: TextStyle(
-                              fontSize: 15,
+                              fontSize: 18,
                             )),
                         onPressed: () {
+                          _resetQuiz();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LeaderBoard()),
                           );
-                        })
+                        }),
+                    IconButton(
+                      onPressed: () {
+                        _resetQuiz();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Home()),
+                        );
+                      },
+                      icon: Icon(Icons.home),
+                      iconSize: 35,
+                      color: Colors.blue[600],
+                    )
                   ],
                 ),
               ),
