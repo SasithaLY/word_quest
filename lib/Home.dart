@@ -142,6 +142,7 @@ class _HomeState extends State<Home> {
                         fit: BoxFit.contain,
                       ),
                     ),
+                    Spacer(),
                     ElevatedButton(
                         onPressed: play,
                         child: Text(
@@ -171,7 +172,7 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(left: 20, right: 20),
+                          padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
                         )),
                     Spacer(),
                     ElevatedButton(
@@ -184,7 +185,7 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(left: 30, right: 30),
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                         )),
                     Spacer()
                   ])));
