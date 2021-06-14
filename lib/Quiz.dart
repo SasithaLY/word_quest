@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:word_quest/Home.dart';
+import 'package:word_quest/LeaderBoard.dart';
 import './adminPanel/configNames.dart';
 import 'package:word_quest/theme/colors.dart';
 
 import './Question.dart';
 import './Answer.dart';
+import './LeaderBoard.dart';
 
 class Quiz extends StatefulWidget {
   @override
@@ -71,12 +74,11 @@ class _QuizState extends State<Quiz> {
   }
 
   Future readLeadboard() async {
-
     try {
       firestore.collection('scores').snapshots().listen((event) {
         event.docs.forEach((element) {
           if (element.id == _auth.currentUser!.uid) {
-            print(element.id.toString() + 'sexxxxxxxxxxxxxxxxxxxxxx' + element.data()['score'].toString());
+            print(element.id.toString() + element.data()['score'].toString());
             var infor = {
               'id': element.id,
               'data': element.data()['score'],
@@ -84,11 +86,9 @@ class _QuizState extends State<Quiz> {
 
             setState(() {
               _userId = infor['id'];
-
               _userScore = infor['data'];
               // _leadboard.insert(0, infor);
             });
-
           }
         });
         // print(_leadboard);
@@ -99,7 +99,7 @@ class _QuizState extends State<Quiz> {
   }
 
   Future<void> _addScoreToLeadboard(int score) async {
-    print(score.toString() + ' asd' + _userId.toString());
+    print(score.toString() + ' and ' + _userId.toString());
     if (score > _userScore) {
       try {
         await firestore.collection('scores').doc('$_userId').update({
@@ -201,10 +201,25 @@ class _QuizState extends State<Quiz> {
                       ),
                     ),
                     FlatButton(
-                        textColor: Colors.red,
-                        hoverColor: Colors.green,
-                        onPressed: _resetQuiz,
-                        child: Text('Restart Quiz'))
+                      textColor: Colors.red,
+                      hoverColor: Colors.green,
+                      onPressed: _resetQuiz,
+                      child: Text('Restart Quiz'),
+                    ),
+                    ElevatedButton(
+                        child: Text('Check Leaderboard'),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.green[600],
+                            textStyle: TextStyle(
+                              fontSize: 15,
+                            )),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LeaderBoard()),
+                          );
+                        })
                   ],
                 ),
               ),
