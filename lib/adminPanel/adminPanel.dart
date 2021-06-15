@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'package:word_quest/adminPanel/ViewAdmins.dart';
+import 'package:word_quest/adminPanel/ViewAdmins.dart';
 import 'package:word_quest/adminPanel/viewQuestions.dart';
 
 import 'addQuestions.dart';
@@ -110,10 +110,10 @@ class _AdminPanelState extends State<AdminPanel> {
                   child: AnimatedButton(
                       color: Colors.green,
                       onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => ViewAdmins()),
-                        // );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ViewAdmins()),
+                        );
                       },
                       child: Text(
                         'View Admins',
