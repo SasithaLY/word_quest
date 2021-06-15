@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:word_quest/Help.dart';
 
 import 'package:word_quest/LeaderBoard.dart';
 import 'adminPanel/adminPanel.dart';
@@ -129,6 +130,17 @@ class _HomeState extends State<Home> {
                                 fontSize: 20, fontWeight: FontWeight.bold),
                           ),
                         ),
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Help()),
+                            );
+                          },
+                          icon: Icon(Icons.help_center),
+                          iconSize: 30,
+                          color: Colors.green,
+                        )
                       ],
                     ),
                     SizedBox(
