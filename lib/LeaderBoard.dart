@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:word_quest/Home.dart';
 import 'package:word_quest/theme/colors.dart';
 
 class LeaderBoard extends StatefulWidget {
@@ -30,7 +31,10 @@ class _LeaderBoardState extends State<LeaderBoard> {
       appBar: AppBar(
         title: Text("Leader Board"),
         leading: IconButton(
-            onPressed: () => {Navigator.pop(context)},
+            onPressed: () => {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Home()))
+                },
             icon: Icon(Icons.arrow_back)),
       ),
       body: getBody(),

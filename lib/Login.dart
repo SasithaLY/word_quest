@@ -32,10 +32,8 @@ class _LoginState extends State<Login> {
                 context,
                 MaterialPageRoute(builder: (context) => AdminPanel()),
               );
-              print("admin");
             } else {
               Navigator.pushReplacementNamed(context, "/");
-              print("user");
             }
           } else {
             print('Document does not exist on the database');
