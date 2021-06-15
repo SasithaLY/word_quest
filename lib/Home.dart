@@ -2,9 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:word_quest/LeaderBoard.dart';
 
+import 'package:word_quest/LeaderBoard.dart';
 import 'adminPanel/adminPanel.dart';
+import './Quiz.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -80,13 +81,18 @@ class _HomeState extends State<Home> {
           .then((DocumentSnapshot data) async {
         if (data.exists) {
           /* Navigate to Play page */
-          print("Exist");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Quiz()),
+          );
         } else {
           await scores.doc(_auth.currentUser!.uid).set({
             "score": 0,
           }).then((value) {
-            /* Navigate to Play page */
-            print("Score created");
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Quiz()),
+            );
           });
         }
       });
@@ -136,18 +142,20 @@ class _HomeState extends State<Home> {
                         fit: BoxFit.contain,
                       ),
                     ),
+                    Spacer(),
                     ElevatedButton(
                         onPressed: play,
                         child: Text(
                           'PLAY',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(left: 30, right: 30),
+                          padding: EdgeInsets.fromLTRB(70, 15, 70, 15),
                         )),
+                    Spacer(),
                     ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -164,8 +172,9 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(left: 30, right: 30),
+                          padding: EdgeInsets.fromLTRB(30, 15, 30, 15),
                         )),
+                    Spacer(),
                     ElevatedButton(
                         onPressed: logout,
                         child: Text(
@@ -176,8 +185,9 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.bold),
                         ),
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.only(left: 30, right: 30),
-                        ))
+                          padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                        )),
+                    Spacer()
                   ])));
   }
 }

@@ -52,9 +52,14 @@ class _AddQuestionsState extends State<AddQuestions> {
             children: [
               Container(
                 width: double.infinity,
+                margin: EdgeInsets.fromLTRB(40, 40, 40, 10),
+                child: Text("The Definition and the Correct Word should be inserted accordingly!", style: TextStyle(color: Colors.green),)
+              ),
+              Container(
+                width: double.infinity,
                 margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
                 child: TextFormField(
-                  decoration: InputDecoration(labelText: 'The Question'),
+                  decoration: InputDecoration(labelText: 'The Definition'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';
@@ -70,7 +75,7 @@ class _AddQuestionsState extends State<AddQuestions> {
                 width: double.infinity,
                 margin: EdgeInsets.fromLTRB(40, 10, 40, 10),
                 child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Correct Answer'),
+                  decoration: InputDecoration(labelText: 'Correct Word'),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';

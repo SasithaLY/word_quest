@@ -65,7 +65,8 @@ class _StartPageState extends State<StartPage> {
               await users.doc(user.uid).set({
                 "name": user.displayName,
                 "role": "user",
-                "pic": user.photoURL
+                "pic": user.photoURL,
+                "email": user.email
               }).then((value) {
                 Navigator.pushReplacementNamed(context, "/");
                 isSubmit = false;
