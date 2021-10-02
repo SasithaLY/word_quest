@@ -5,6 +5,7 @@ A new Flutter project.
 ## Getting Started
 
 This project is a starting point for a Flutter application.
+this application is used to find words and its a puzzle application
 
 A few resources to get you started if this is your first Flutter project:
 
